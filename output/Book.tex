@@ -1,0 +1,327 @@
+% A template for turning a series of dated posts/chapters (i.e. a blog)
+% into a CreateSpace-ready 5.25" x 8" book.
+% 
+% Joel Dueck <joel@jdueck.net>
+%
+\documentclass[english,showtrims, 10pt]{memoir} 
+\usepackage[breaklinks=true,unicode=true,hidelinks]{hyperref} 
+\usepackage[T1]{fontenc}
+\usepackage[sc]{mathpazo} 
+\usepackage{xspace}
+\usepackage[protrusion=true]{microtype}
+\usepackage{xltxtra}
+
+% Set the main and monospaced fonts
+%
+\setromanfont[Mapping=tex-text,Ligatures={Common, Rare, Discretionary},Numbers=OldStyle]{Adobe Caslon Pro}
+\setmonofont[Mapping=tex-text,Scale=MatchLowercase]{Triplicate T4c}
+
+% Make hyperlinks appear as footnotes
+% Taken from https://groups.google.com/forum/#!topic/pandoc-discuss/O-N0H1eBnVU
+\usepackage{url}
+\renewcommand{\href}[2]{#2\footnote{\raggedright\url{#1}}}
+\renewcommand\UrlFont{\rmfamily\itshape}
+
+% Customize footnotes so that, within the footnote, the footnote number is
+% the same size as the footnote text (per Bringhurst). Also remove the 
+% horizontal rule above footnotes.
+%
+\usepackage[norule,splitrule,multiple,hang]{footmisc}
+\makeatletter
+\renewcommand\@makefntext[1]{\parindent 1em%
+    \noindent
+    \hb@xt@0em{\hss\normalfont\@thefnmark.} #1}
+\def\splitfootnoterule{\kern-3\p@ \hrule width 1in \kern2.6\p@}
+\makeatother
+\renewcommand\footnotesize{\fontsize{8}{10} \selectfont}
+\renewcommand{\thefootnote}{\arabic{footnote}}
+
+% Here is where we configure our paper size and margins.
+% The text block is sized and placed in a pleasing way
+% according to the methods described here:
+%  http://retinart.net/graphic-design/secret-law-of-page-harmony/
+%
+\setstocksize{8in}{5.25in}
+\settrimmedsize{8in}{5.25in}{*}
+\settypeblocksize{5.333in}{3.5in}{*}
+\setlrmargins{0.583in}{*}{*}
+\setulmargins{0.889in}{*}{*}
+\setmarginnotes{0.156in}{0.75in}{\onelineskip}
+\setheadfoot{\onelineskip}{2\onelineskip}
+\setheaderspaces{*}{\onelineskip}{*}
+\checkandfixthelayout
+
+% The next few commands customize the chapter format a bit to suit 
+% blog posts. Blog posts typically each have their own posted date,
+% and we need to typeset that date somewhere. I have chosen to place
+% the date where the chapter number would normally go in the 'dowding'
+% chapter style (centered above the chapter title). Thus 'numbered' 
+% chapters are now actually 'dated' chapters.
+% 
+% First we define a couple of custom commands:
+%
+\newcommand{\setChapterDescription}[1]{%
+   \def\chapterDesc{#1}%
+}
+\def\chapterDesc{}
+
+% Our chapter template will use the \ChapterDate command to include
+% the date specified in the Markdown source for each chapter. (If 
+% no date is specified, the template will use a "non-numbered" 
+% chapter heading.)
+%
+\newcommand{\ChapterDate}[2]{
+	\setChapterDescription{#2}
+	\chapter{#1}
+    %\addcontentsline{toc}{chapter}{#1}
+	\setChapterDescription{}
+}
+
+% Here we customize the "dowding" chapter style to create our own
+% (dowdingdate) which removes the word "chapter" and replaces the 
+% chapter number with \chapterDesc. The changes are marked.
+% 
+\makeatletter
+\makechapterstyle{dowdingdate}{%
+  \setlength{\beforechapskip}{2\onelineskip}
+  \setlength{\afterchapskip}{1.5\onelineskip \@plus .1\onelineskip 
+                            \@minus 0.167\onelineskip}%
+  \renewcommand*{\chapnamefont}{\normalfont}%
+  \renewcommand*{\chapnumfont}{\chapnamefont}%
+  
+  % Remove the word "Chapter" before the date (where the chapter 
+  % number would normally be)
+  \renewcommand*{\printchaptername}{}%
+  
+  % Print the contents of \chapterDesc in place of the chapter number
+  % except in appendices (where a simple [roman] numeral is printed)
+  \renewcommand*{\printchapternum}{\centering\chapnumfont \ifanappendix \thechapter
+                                   \else \chapterDesc\fi}
+  % Original % \renewcommand*{\printchapternum}{\centering\chapnumfont \ifanappendix \thechapter
+  %               \else \numtoName{\c@chapter}\fi}%
+  \renewcommand*{\chaptitlefont}{\normalfont\itshape\huge\centering}%
+  \renewcommand*{\printchapternonum}{%
+    \vphantom{\printchaptername}\vskip\midchapskip}}
+\makeatother
+
+
+  \setsecnumdepth{chapter}
+  %\setcounter{secnumdepth}{0}  % or -1
+
+ 
+
+\makeatletter
+\def\maketitle{%
+  \null
+  \thispagestyle{empty}%
+  \vfill
+  \begin{center}\leavevmode
+    \normalfont
+    {\LARGE\raggedleft \@author\par}%
+    \hrulefill\par
+    {\huge\raggedright \@title\par}%
+    \vskip 1cm
+%    {\Large \@date\par}%
+  \end{center}%
+  \vfill
+  \null
+  \cleardoublepage
+  }
+\makeatother
+
+ \title{The Local Yarn}  
+ \author{Joel Dueck}  
+    \date{Feb 22, 2015} 
+
+\begin{document} 
+\chapterstyle{dowdingdate}
+
+%\let\cleardoublepage\clearpage
+
+ \maketitle  
+
+\frontmatter
+
+\null\vfill
+
+\begin{flushleft}
+ \textit{The Local Yarn} 
+
+
+© \textsc{COPYRIGHT INFO}
+
+
+ISBN--INFO
+
+ISBN--13: 
+\bigskip
+
+
+
+
+
+\textsc{ALL RIGHTS RESERVED}
+
+
+
+
+\end{flushleft}
+
+ 
+
+\cleardoublepage
+% Suppress "Contents" from referencing itself in the ToC
+\begin{KeepFromToc}
+  \tableofcontents
+\end{KeepFromToc}
+
+\mainmatter
+\pagestyle{simple}
+
+\ChapterDate{Imagination and Self-Doubt}{July 18, 2014}
+
+{In a} 2005 episode of This American Life, titled ``A Little Bit of
+Knowledge'',
+\href{http://www.thisamericanlife.org/radio-archives/episode/293/a-little-bit-of-knowledge?act=3\#play}{we
+hear the story of an electrician}, who, despite being fairly smart,
+nonetheless deludes himself into thinking he has disproved Einstein's
+theory of relativity. The fact that he's reasonably intelligent makes it
+all the harder for him to see his own error, even when confronted by
+actual experts.
+
+\begin{quote}
+\textbf{Bob Berenz:} All right, in this point I have to be completely
+honest. I did write a paper early on, and I submitted it to a physics
+site. And it was summarily rejected out of hand. But I did learn an
+important lesson, that physicists and what's being done by them is very
+complicated, very mathematically intensive. What I've got is none of
+that, so it completely, almost in reverse, goes over their heads."
+\end{quote}
+
+Whenever his theory is challenged, Bob's response is to reject the
+messenger as being narrow-minded or unintelligent. In fact, of course,
+\emph{Bob} is the one whose mind is not quite up to the task he has set
+for himself. But he can't allow himself even to suspect this. In this
+episode's narrative, Bob goes from brushing off simple, obvious clues to
+his own crackpottedness (the rejection of his paper) to dismissing
+direct personal demonstrations of his ideas' incorrectnesses. Even after
+a PhD in nuclear physics takes time to meet with him and explain what's
+wrong with his theories, Bob comes away totally unfazed.
+
+\begin{quote}
+\textbf{Bob Berenz:} Well, this is not really fair, but I'm going to say
+it anyway. It's like he {[}Dr.~Brant Watson{]} was talking the party
+line. He didn't strike me as being all that bright. I know he has a
+couple of patents, and he's this big professor, and it's probably not
+fair for me to say that, but I'm not claiming to be this incredible
+genius in this one area. It's very simple what I ran into. And I need
+some help to get it put into a forum where people can understand it. But
+it really isn't that difficult.
+\end{quote}
+
+I listened to all this with great interest, because I fear that I myself
+might be just like Bob. In fact, I waver between thinking I am \emph{in
+danger} of \emph{becoming like} Bob, and thinking I \emph{have been like
+Bob for years} and am \emph{just now realizing it}. I have big,
+long-nursed theories of my own about subjects I have no formal training
+in, and I even write \& tweet on those subjects, with few to no
+disclaimers.\footnote{Consider this article my life-long disclaimer.}
+
+When an idea captivates your imagination, you can't really do anything
+\emph{but} ponder it, discuss it, write about it, and live it out -- at
+least, not until another idea captivates it even more strongly. And
+there, I hope, is where Bob and I part company: because while he will
+not even admit the possibility of a new idea displacing his old ones,
+that possibility is deeply appealing to me. In fact I
+\href{http://howellcreekradio.com/episodes/the-field-and-the-fortress}{genuinely
+enjoy being proven wrong} much more than the feeling of being proven
+apparently correct. In that moment there is a kind of clarity that is
+real and rare. I may put up a fight and kick a lot of tires before I get
+there, but really this is because I want that clarity: to \emph{know}
+I'm wrong, and not to have to go on just \emph{suspecting} I'm wrong.
+
+I regret that I don't have (or don't know that I have) the direct
+knowledge or tools to construct with certainty my ideas on theology,
+metaphysics or economics; I fear I will never have them. But being,
+thankfully, aware of this shortcoming, I can do no other than to explore
+these ideas with humility and the hope of further discovery; and I
+invite my readers to humour me, and join with me in the same spirit.
+
+\ChapterDate{Death, Decay and the Haunted Afterlife}{October 26, 2014}
+
+{The common} Western idea of death is that once you die you are
+transported immediately to a place of ultimate comfort (or torment),
+with no intervals. Your consciousness continues seamlessly into the next
+life, just no longer tied to your physical body.
+
+And then `compiled' to {PDF}:
+
+\begin{verbatim}
+$ pandoc -s -o out.tex simplepost.pdf
+$ xelatex out.tex out.pdf
+\end{verbatim}
+
+The result is a very basic {PDF} set in Computer Modern, suitable for
+printing on loose sheets of 8.5″ × 11″ paper:
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+Suppose, though, that while consciousness does continue in some way
+after death, it remains thoroughly joined to your physical remains. As
+your body decays, so does your personality, your capacity to reason.
+Your emotions, having been all along largely the product of your fluids
+and nerves, transmute ever more into the mute horror which your remains
+increasingly depict.
+
+This consciousness-in-death was a running theme of Edgar Allen Poe. His
+genius, in my view, was to paint this horror only at the edges --
+premature burials,
+\href{http://www.eapoe.org/works/tales/lssbthb.htm}{loss of breath}, the
+unwillingness of the ``deceased'' to actually die -- so intimately that
+we often mistake the edge for the abyss at the center. But in a kind of
+artistic truth, the madness of Poe's narrators increases in proportions
+as that abyss (the experience of actually being dead) is really
+approached -- whenever we see a lady of Usher, for example, or hear the
+beating of a murdered man's heart -- it is nearly always seen through
+senses that are themselves being damaged.
+
+\subsection{C.S. Lewis's view}\label{c.s.-lewiss-view}
+
+C.S. Lewis, on the other hand, gets right inside this idea, describing
+it in lucid detail in \emph{Perelandra}, when his villain Weston
+temporarily recovers his senses and
+\href{http://www.bestlibraryspot.net/fantasticfiction/Perelandra/14838.html}{tries
+to articulate his experience of death}:
+
+\begin{quote}
+``\ldots{}All the good things are now -- \textbf{a thin little rind of
+what we call life}, put on for show, and then -- the real universe for
+ever and ever. To thicken the rind by one centimetre -- to live one
+week, one day, one half hour longer -- that's the only thing that
+matters. \ldots{} {[}Humanity{]} knows -- Homer knew -- that \textbf{all
+the dead have sunk down into the inner darkness: under the rind.} All
+witless, all twittering, gibbering, decaying\ldots{} Then there's
+Spiritualism\ldots{}I used to think it all nonsense. But it isn't. It's
+all true. You've noticed that all pleasant accounts of the dead are
+traditional or philosophical? What actual experiment discovers is quite
+different. Ectoplasm - slimy films coming out of a medium's belly and
+making great, chaotic, tumbledown faces. Automatic writing producing
+reams of rubbish.''
+\end{quote}
+
+I wonder whether this idea of death is common in other cultures, or
+times of history. It seems to me something very Other -- definitely not
+Christian, but not exactly Pagan either.
+
+The song `Bottom of the River' by Tom Fun Orchestra seems an appropriate
+example as well. Interpreted by
+\href{http://www.animationblog.org/2009/10/alasdair-brotherston-jock-mooney-bottom.html}{some}
+as concerned mainly with environmental vandalism, it seems to me more
+straightforward to read it as the experience of those ``beneath the
+rind'': dead yet conscious, still chained to their remains, enduring a
+never-ending passage of time where light is distant and the idle
+time-marking movements of the living all too close. 
+
+ 
+
+\end{document}
