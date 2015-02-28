@@ -73,7 +73,6 @@
 \newcommand{\ChapterDate}[2]{
 	\setChapterDescription{#2}
 	\chapter{#1}
-    %\addcontentsline{toc}{chapter}{#1}
 	\setChapterDescription{}
 }
 
@@ -95,13 +94,16 @@
   
   % Print the contents of \chapterDesc in place of the chapter number
   % except in appendices (where a simple [roman] numeral is printed)
-  \renewcommand*{\printchapternum}{\centering\chapnumfont \ifanappendix \thechapter
+  \renewcommand*{\printchapternum}{\centering\chapnumfont 
+                                   \ifanappendix \thechapter
                                    \else \chapterDesc\fi}
-  % Original % \renewcommand*{\printchapternum}{\centering\chapnumfont \ifanappendix \thechapter
-  %               \else \numtoName{\c@chapter}\fi}%
+  % Original % 
+  %\renewcommand*{\printchapternum}{\centering\chapnumfont 
+  %                                 \ifanappendix \thechapter
+  %                                 \else \numtoName{\c@chapter}\fi}%
   \renewcommand*{\chaptitlefont}{\normalfont\itshape\huge\centering}%
   \renewcommand*{\printchapternonum}{%
-    \vphantom{\printchaptername}\vskip\midchapskip}}
+      \vphantom{\printchaptername}\vskip\midchapskip}}
 \makeatother
 
 
