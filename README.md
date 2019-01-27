@@ -1,5 +1,10 @@
 # Simple Book Machine
 
+**Note: This repository is no longer supported or maintained.** I have found other approaches to the task of book publishing that work better for me (see my [try-pollen][tp] and [thenotepad][np] repositories). If you are interested in taking over as the maintainer of this project, consider forking this repository. If any such fork gains traction, I will update this README to direct users to the new project.
+
+[tp]: https://github.com/otherjoel/try-pollen
+[np]: https://github.com/otherjoel/thenotepad
+
 I wanted a basic but well-designed template/system for taking a bunch of "dated" Markdown files (e.g., blog posts) and producing a properly typeset PDF that I could take right to CreateSpace and order as a bound book. 
 
 The output generated here can theoretically be uploaded straight to CreateSpace for use in a 5.25″ × 8″ sized bound book. (Full disclosure, it's early days and I have yet to actually try this, but the PDF does meet all their requirements.) I plan to add options for a few other book sizes and designs in the future.
@@ -55,8 +60,7 @@ Once you have the contents to your liking, this PDF file can theoretically be up
 
 **Note on the table of contents:** On the very first try, your Table of Contents will not be populated in the PDF. The first time xelatex builds your PDF, it needs to run twice in order to fully incorporate the chapter titles into your table of contents. The script only runs xelatex once, so you can either just run the script twice the first time, or manually run `xelatex ./output/Book.tex Book.pdf` yourself after the script is run the first time.
 
-
-## Future improvements
+## Possible improvements
 
 * Need to work on treatment of images
 * Add a second template based on [tufte-latex][] for Ed Tufte-style books (8.5″ × 11″)
